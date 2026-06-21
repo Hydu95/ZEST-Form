@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Join ZEST — Unlock Your Future | CGROUPS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f7faf7; color: #1a1a1a; font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; }
+
+  .hero {
+    background: #ffffff;
+    border-bottom: 3px solid #2e7d32;
+    padding: 36px 24px 28px;
+    text-align: center;
+  }
+
+  .logo-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
+
+  .hero .tagline { font-size: 13px; color: #2e7d32; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+  .hero .sub { font-size: 14px; color: #666; max-width: 420px; margin: 0 auto; }
+
+  .form-container { max-width: 600px; margin: 0 auto; padding: 28px 20px 56px; }
+
+  .section-head { display: flex; align-items: center; gap: 8px; margin: 24px 0 12px; }
+  .section-head .dot { width: 7px; height: 7px; border-radius: 50%; background: #2e7d32; flex-shrink: 0; }
+  .section-head span { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #2e7d32; }
+  .section-head::after { content: ''; flex: 1; height: 1px; background: #d4ecd4; }
+
+  .field { background: #ffffff; border: 1px solid #ddd; border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; transition: border-color 0.2s, box-shadow 0.2s; }
+  .field:focus-within { border-color: #2e7d32; box-shadow: 0 0 0 3px #e8f5e9; }
+
+  .field label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
+  .field label .req { color: #2e7d32; }
+  .field label .hint { display: block; font-size: 11px; color: #999; font-weight: 400; margin-top: 1px; }
+
+  input[type="text"], input[type="email"], input[type="tel"], textarea {
+    width: 100%; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 7px;
+    color: #1a1a1a; font-family: 'Inter', sans-serif; font-size: 14px;
+    padding: 10px 12px; outline: none; transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus { border-color: #2e7d32; background: #fff; }
+  input::placeholder, textarea::placeholder { color: #bbb; }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .options { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .options.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+  .opt {
+    display: flex; align-items: center; gap: 10px;
+    background: #fafafa; border: 1px solid #e8e8e8; border-radius: 8px;
+    padding: 9px 12px; cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    font-size: 13px; color: #444; user-select: none;
+  }
+  .opt:hover { border-color: #81c784; background: #f1f8e9; }
+  .opt input { display: none; }
+  .opt .mark {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid #ccc; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .opt.checkbox .mark { border-radius: 4px; }
+  .opt input:checked ~ .mark { border-color: #2e7d32; background: #2e7d32; }
+  .opt input:checked ~ .mark::after { content: '✓'; font-size: 10px; color: #fff; font-weight: 700; }
+  .opt:has(input:checked) { border-color: #2e7d32; background: #f1f8e9; color: #1b5e20; font-weight: 500; }
+
+  .submit-wrap { margin-top: 24px; }
+  .submit-btn {
+    width: 100%; background: #2e7d32; color: #fff; border: none;
+    border-radius: 10px; font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 600; padding: 16px; cursor: pointer;
+    letter-spacing: 0.02em; transition: background 0.2s, transform 0.1s;
+  }
+  .submit-btn:hover { background: #1b5e20; }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+  .submit-note { text-align: center; font-size: 11px; color: #bbb; margin-top: 8px; }
+  .sending-msg { text-align: center; font-size: 13px; color: #2e7d32; margin-top: 12px; display: none; }
+  .error-msg { background: #fff3f3; border: 1px solid #f5c6c6; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #c62828; margin-top: 12px; display: none; }
+
+  .success { display: none; text-align: center; padding: 56px 24px; }
+  .success .icon { width: 64px; height: 64px; border-radius: 50%; background: #e8f5e9; border: 2px solid #2e7d32; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 18px; }
+  .success h2 { font-family: Georgia, serif; font-size: 26px; color: #2e7d32; margin-bottom: 8px; }
+  .success p { color: #666; font-size: 14px; max-width: 340px; margin: 0 auto; line-height: 1.7; }
+  .success .green { color: #2e7d32; margin-top: 16px; font-size: 13px; font-style: italic; font-weight: 600; }
+
+  .footer { text-align: center; font-size: 11px; color: #bbb; padding: 16px 24px 28px; border-top: 1px solid #eee; }
+  .footer a { color: #2e7d32; text-decoration: none; }
+
+  @media (max-width: 480px) { .options.grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <!-- ZEST Logo -->
+  <div class="logo-wrap">
+    <svg width="220" height="72" viewBox="0 0 220 72" xmlns="http://www.w3.org/2000/svg">
+      <text x="8" y="52" font-family="Georgia, 'Times New Roman', serif" font-size="48" font-weight="700" fill="#2e7d32" letter-spacing="2">ZEST</text>
+      <rect x="8" y="58" width="82" height="4" rx="2" fill="#1a1a1a"/>
+      <circle cx="96" cy="60" r="4" fill="#2e7d32"/>
+      <text x="8" y="71" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#999" letter-spacing="3">A CGROUPS INITIATIVE</text>
+    </svg>
+  </div>
+  <p class="tagline">More income · Better life · That's Zest</p>
+  <p class="sub">Skills, opportunities, mentorship and community — everything you need to grow and prosper.</p>
+</div>
+
+<div class="form-container">
+  <form id="zestForm">
+
+    <div class="section-head"><div class="dot"></div><span>Personal details</span></div>
+
+    <div class="field">
+      <label>Full name <span class="req">*</span><span class="hint">Enter your full name</span></label>
+      <input type="text" name="name" placeholder="Your full name" required />
+    </div>
+
+    <div class="field">
+      <label>WhatsApp / Mobile number <span class="req">*</span><span class="hint">We'll reach you here first</span></label>
+      <input type="tel" name="phone" placeholder="Your mobile number" required />
+    </div>
+
+    <div class="field">
+      <label>Email address <span class="req">*</span><span class="hint">For updates, events &amp; resources</span></label>
+      <input type="email" name="email" placeholder="your@email.com" required />
+    </div>
+
+    <div class="field">
+      <label>City / Area <span class="req">*</span><span class="hint">E.g. Chennai, Coimbatore, Salem…</span></label>
+      <input type="text" name="city" placeholder="Your city" required />
+    </div>
+
+    <div class="section-head"><div class="dot"></div><span>Your current situation</span></div>
+
+    <div class="field">
+      <label>What best describes you right now? <span class="req">*</span></label>
+      <div class="options">
+        <label class="opt"><input type="radio" name="situation" value="Looking for a job" required /><span class="mark"></span><span>Looking for a job</span></label>
+        <label class="opt"><input type="radio" name="situation" value="Employed, want more income" /><span class="mark"></span><span>Employed, but want more income</span></label>
+        <label class="opt"><input type="radio" name="situation" value="Running a small business" /><span class="mark"></span><span>Running a small business</span></label>
+        <label class="opt"><input type="radio" name="situation" value="Want to start a business" /><span class="mark"></span><span>Want to start a business</span></label>
+        <label class="opt"><input type="radio" name="situation" value="Homemaker / Restarting career" /><span class="mark"></span><span>Homemaker / Restarting career</span></label>
+        <label class="opt"><input type="radio" name="situation" value="Student / Fresher" /><span class="mark"></span><span>Student / Fresher</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Age group</label>
+      <div class="options grid">
+        <label class="opt"><input type="radio" name="age" value="18–25" /><span class="mark"></span><span>18 – 25</span></label>
+        <label class="opt"><input type="radio" name="age" value="26–35" /><span class="mark"></span><span>26 – 35</span></label>
+        <label class="opt"><input type="radio" name="age" value="36–45" /><span class="mark"></span><span>36 – 45</span></label>
+        <label class="opt"><input type="radio" name="age" value="45+" /><span class="mark"></span><span>45 +</span></label>
+      </div>
+    </div>
+
+    <div class="section-head"><div class="dot"></div><span>What you're looking for</span></div>
+
+    <div class="field">
+      <label>What do you want from ZEST? <span class="req">*</span><span class="hint">Select all that apply</span></label>
+      <div class="options">
+        <label class="opt checkbox"><input type="checkbox" name="need" value="Job opportunities" /><span class="mark"></span><span>Job opportunities</span></label>
+        <label class="opt checkbox"><input type="checkbox" name="need" value="Business mentorship" /><span class="mark"></span><span>Business mentorship &amp; guidance</span></label>
+        <label class="opt checkbox"><input type="checkbox" name="need" value="Skill development" /><span class="mark"></span><span>Skill development / training</span></label>
+        <label class="opt checkbox"><input type="checkbox" name="need" value="Financial wellness" /><span class="mark"></span><span>Financial wellness support</span></label>
+        <label class="opt checkbox"><input type="checkbox" name="need" value="Network & community" /><span class="mark"></span><span>Network &amp; community</span></label>
+        <label class="opt checkbox"><input type="checkbox" name="need" value="Income growth" /><span class="mark"></span><span>Income growth strategies</span></label>
+      </div>
+    </div>
+
+    <div class="section-head"><div class="dot"></div><span>How you found us</span></div>
+
+    <div class="field">
+      <label>How did you hear about ZEST?</label>
+      <div class="options grid">
+        <label class="opt"><input type="radio" name="source" value="Friend / Family" /><span class="mark"></span><span>Friend / Family</span></label>
+        <label class="opt"><input type="radio" name="source" value="Instagram / Facebook" /><span class="mark"></span><span>Instagram / Facebook</span></label>
+        <label class="opt"><input type="radio" name="source" value="WhatsApp" /><span class="mark"></span><span>WhatsApp</span></label>
+        <label class="opt"><input type="radio" name="source" value="Website" /><span class="mark"></span><span>Website</span></label>
+        <label class="opt"><input type="radio" name="source" value="Event / Seminar" /><span class="mark"></span><span>Event / Seminar</span></label>
+        <label class="opt"><input type="radio" name="source" value="Other" /><span class="mark"></span><span>Other</span></label>
+      </div>
+    </div>
+
+    <div class="section-head"><div class="dot"></div><span>Your dream</span></div>
+
+    <div class="field">
+      <label>Tell us your goal — in your own words<span class="hint">This helps us guide you better from day one</span></label>
+      <textarea name="dream" placeholder="I want to…"></textarea>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn" id="submitBtn">Join ZEST — Fulfill My Dreams →</button>
+      <div class="sending-msg" id="sendingMsg">⏳ Submitting your details, please wait…</div>
+      <div class="error-msg" id="errorMsg">Something went wrong. Please try again or WhatsApp us directly.</div>
+      <p class="submit-note">Your details are safe with us. No spam, ever.</p>
+    </div>
+
+  </form>
+
+  <div class="success" id="successMsg">
+    <div class="icon">🌱</div>
+    <h2>Welcome to ZEST!</h2>
+    <p>Thank you for taking this step. Our team will reach you on WhatsApp within 24 hours to guide you forward.</p>
+    <p class="green">Grow. Prosper. Inspire.</p>
+  </div>
+</div>
+
+<div class="footer">
+  A <a href="https://cgroups.in" target="_blank">CGROUPS</a> initiative &nbsp;·&nbsp; Vision to Serve Millions &nbsp;·&nbsp; © 2025 Celebrate Enterprises Pvt Ltd
+</div>
+
+<script>
+  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbzCZ9ZdsfTQKMuMqO298x8RKIckweCZexRq3MuYXeP_QP2CkV_mg_LVQ5PSu4ZT3Gur8A/exec';
+
+  document.getElementById('zestForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var needs = [...document.querySelectorAll('input[name="need"]:checked')];
+    if (needs.length === 0) {
+      alert('Please select at least one thing you are looking for from ZEST.');
+      return;
+    }
+    var situation = document.querySelector('input[name="situation"]:checked');
+    if (!situation) {
+      alert('Please select your current situation.');
+      return;
+    }
+
+    var data = {
+      name:      document.querySelector('input[name="name"]').value.trim(),
+      phone:     document.querySelector('input[name="phone"]').value.trim(),
+      email:     document.querySelector('input[name="email"]').value.trim(),
+      city:      document.querySelector('input[name="city"]').value.trim(),
+      situation: situation.value,
+      age:       (document.querySelector('input[name="age"]:checked') || {}).value || 'Not specified',
+      needs:     needs.map(function(n) { return n.value; }).join(', '),
+      source:    ((document.querySelector('input[name="source"]:checked')) || {}).value || 'Not specified',
+      dream:     document.querySelector('textarea[name="dream"]').value.trim()
+    };
+
+    var btn = document.getElementById('submitBtn');
+    var sendingMsg = document.getElementById('sendingMsg');
+    var errorMsg = document.getElementById('errorMsg');
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    sendingMsg.style.display = 'block';
+    errorMsg.style.display = 'none';
+
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function() {
+      document.getElementById('zestForm').style.display = 'none';
+      sendingMsg.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Join ZEST — Fulfill My Dreams →';
+      sendingMsg.style.display = 'none';
+      errorMsg.style.display = 'block';
+    });
+  });
+</script>
+</body>
+</html>
